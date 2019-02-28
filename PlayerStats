@@ -1,0 +1,83 @@
+class playerStats:
+    
+    def __init__(self):
+        self._playerLife = None
+        self._playerHealth = None
+        self._playerSpeed = None
+        self._playerAttackSpeed = None
+        self._playerAttackDamage = None
+        
+    # Life Functions    
+        
+    def setLife(self, x):
+        self._playerLife = x
+        
+    def getLife(self):
+        return self._playerLife
+    
+    def addHealth(self, x):
+        self._playerLife += x
+        
+    def minusHealth(self, x):
+        self._playerLife -= x
+    
+    # Health functions
+    
+    def minusHealth(self, x):
+        self._playerHealth -= x
+                
+    def addHealth(self, x):
+        self._playerHealth += x
+        
+    def setHealth(self, x):
+        playerHealth = x
+        
+    def getHealth(self):
+        return self._playerHealth
+        
+        
+    # Speed functions
+    
+    def setSpeed(self, x):
+        self._playerSpeed = x
+        
+    def getSpeed(self):
+        return self._playerSpeed
+    
+    def addSpeed(self, x):
+        self._playerSpeed += x
+        
+    def minusSpeed(self, x):
+        self._playerSpeed -= x
+        
+      
+    # Attack Speed functions
+    
+    def setAttackSpeed(self, x):
+        self._playerAttackSpeed = x
+        
+    def getAttackSpeed(self):
+        return self._playerAttackSpeed
+    
+    def addAttackSpeed(self, x):
+        self._playerAttackSpeed += x
+       
+    def minusAttackSpeed(self, x):
+        self._playerAttackSpeed -= x
+       
+    
+    # Attack Damage functions
+    
+    def setAttackDamage(self, x):
+        self._playerAttackDamage = x
+        
+    def getAttackDamage(self):
+        return self._playerAttackDamage
+    
+    def addAttackDamage(self, x):
+        self._playerAttackDamage += x
+    
+    def minusAttackDamage(self, x):
+        self._playerAttackDamage -= x
+
+    
