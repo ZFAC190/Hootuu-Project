@@ -4,9 +4,12 @@ HEIGHT = 560
 LIVES = 3
 
 #Class list: game
-#by Silas
+#Author: Silas
 again = True
 class Game:
+	def ask():
+		# after trying to find nice popup box, will have quit and again buttons on side
+		pass
 	def game():
 		while again:
 			showWelcomeScreen()
