@@ -21,4 +21,4 @@ class Game:
 				pass
 			again = ask("Would you like to play again?")
 
-Game.game
+Game.game()
