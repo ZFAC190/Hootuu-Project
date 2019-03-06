@@ -1,0 +1,15 @@
+https://py3.codeskulptor.org/#user303_BT3f5tZ8sHjrlS9_3.py
+
+class playerMovement:
+    playerXY = (0, 0)
+    
+    def playerMovement(player):
+        # if button right is true and player x is smaller than add player speed to the x
+        if buttonRight & playerXY[0] < WIDTH:
+            playerXY[0] += player.getSpeed()
+        if buttonLeft & playerXY[0] > 0:
+            playerXY[0] -= player.getSpeed()
+        if buttonUp & playerXY[1] < 0:
+            playerXY[1] += player.getSpeed()
+        if buttonDown & playerXY[1] < HEIGHT:
+            playerXY[1] += player.getSpeed()
