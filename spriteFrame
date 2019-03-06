@@ -1,6 +1,4 @@
-https://py3.codeskulptor.org/#user303_AWyAjNyLca1Hhiy_2.py
-
-
+https://py3.codeskulptor.org/#user303_AWyAjNyLca1Hhiy_3.py
 
 class spriteFrame:
     
@@ -10,7 +8,6 @@ class spriteFrame:
         self._maxFrame = none
         
     def setFrames(self, frame, maxFrame, dimensions):
-        self._IMG = img
         self._frame = frame
         self._maxFrame = maxFrame
         self._DIMENSIONS = dimensions
