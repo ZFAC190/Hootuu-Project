@@ -1,0 +1,41 @@
+https://py3.codeskulptor.org/#user303_AWyAjNyLca1Hhiy.py
+
+
+
+class spriteFrame:
+    
+    def __init__(self):
+        self._IMG = none
+        self._DIMENSIONS = none
+        self._frame = none
+        self._maxFrame = none
+        
+    def setFrames(self, img, frame, maxFrame, dimensions):
+        self._IMG = img
+        self._frame = frame
+        self._maxFrame = maxFrame
+        self._DIMENSIONS = dimensions
+       
+    def nextFrame(self):
+        if self._frame[0] == 0: self._frame[0] += 1
+        if self._frame[1] == 0: self._frame[1] += 1
+        
+        if self._frame[0] < self._maxFrame[0]:
+            self._frame[0] += 1
+            return getFrame(self._frame)
+        elif self._frame[0] == self._maxFrame[0] & self._frame[1] < self._maxFrame[1]:
+            self._frame[0] = 0
+            self._frame [1] += 1
+            return getFrame(self._frame)
+        
+        elif self._frame[0] == self._maxFrame[0] & self._frame[1] == self._maxFrame[1]:
+            self._frame[0] = 1
+            self._frame[1] = 1
+            return getFrame(self._frame)
+           
+           
+      
+    def getFrame(self, frame):
+        return "(" ((self._DIMENSIONS[0]/self._maxFrame[0])/2 * frame[0]) + ", " + ((self._DIMENSIONS[1]/self._maxFrame[1])/2 * frame[1]) + ")"
+        
+       
