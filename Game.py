@@ -1,10 +1,10 @@
 import simplegui
-WIDTH = 840
-HEIGHT = 560
+WIDTH = 560
+HEIGHT = 800
 LIVES = 3
 
 #Class list: game
-#URL https://py3.codeskulptor.org/#user303_48FbQ12A06N4ZQu.py
+#URL https://py3.codeskulptor.org/#user303_48FbQ12A06N4ZQu_0.py
 #Author: Silas
 again = True
 class Game:
