@@ -1,4 +1,4 @@
-#https://py3.codeskulptor.org/#user303_UVfQeuVlF4_4.py
+#https://py3.codeskulptor.org/#user303_UVfQeuVlF4_18.py
 import simplegui
 
 canvasDim= (560, 800)
@@ -12,33 +12,8 @@ class Background:
         self.height = self.background.get_height()
         
     def draw(self,canvas):
-        for i in range(0,14):
-
-            canvas.draw_image(self.background,((self.width/4)*3,self.height/4),(120,120),[canvasDim[0]/2+250-(40*i),canvasDim[1]/2],[50,50])
-
-            for j in range(0,20):
-
-                    canvas.draw_image(self.background,((self.width/4)*3,self.height/4),(120,120),[canvasDim[0]/2+250-(40*i),30+(j*40)],[50,50]) 
-
-#-------------------------------------------------------------------
-class Canopy:
-    def __init__(self,url):
-        self.url=url
-        self.tree = simplegui.load_image(url)
-        self.width = self.tree.get_width()
-        self.height = self.tree.get_height()
-        
-    def draw(self,canvas):
-        for i in range(0,24):
-
-            if i%2==0:
-                canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[30,0+(35*i)],[175,175])
-                canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[530,0+(35*i)],[175,175])
-
-            else:
-                canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[10,0+(35*i)],[175,175])
-                canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[550,0+(35*i)],[175,175])
-        
+        canvas.draw_image(self.background,(self.width/2,self.height/2),(self.width,self.height),(280,400),[580,800])
+   
 #-------------------------------------------------------------------        
 class Health_Bar:
     def __init__(self,url):
@@ -123,14 +98,17 @@ class Scoreboard:
 #------------------------------------------------------------------- 
 class Main_Screen:
     def __init__(self):
-        self.backgroundUrl='https://streak.club/img/dXBsb2Fkcy9pbWFnZS82MDkxLnBuZw==/original/lvbzh1.png'
+        self.backgroundUrl='https://user-images.githubusercontent.com/48086685/53949853-d43b4d00-40c2-11e9-9632-c15f820c557e.png'
+        
+        
+        
         self.treeUrl='http://orig08.deviantart.net/e55b/f/2012/146/c/0/c0a5a29fd1460939a810ae10c84f9c4f-d515mo1.png'
         self.heartUrl='http://orig02.deviantart.net/8baa/f/2012/058/0/5/8_bit_heart_stock_by_xquatrox-d4r844m.png'
         
         #
         
         self.background = Background(self.backgroundUrl)
-        self.treeCanopy = Canopy(self.treeUrl)
+        
         self.healthBar = Health_Bar(self.heartUrl)
         self.scoreBoard = Scoreboard()
     
@@ -140,9 +118,7 @@ class Main_Screen:
         
         self.background.draw(canvas)
 
-        #Tree Canopy - Recolour
         
-        self.treeCanopy.draw(canvas)
 
         #Borders
         canvas.draw_polygon([(0, 0), (0, canvasDim[1]), (canvasDim[0], canvasDim[1]), (canvasDim[0],0)], 20, 'silver')
