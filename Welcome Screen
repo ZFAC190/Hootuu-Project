@@ -1,7 +1,7 @@
-https://py3.codeskulptor.org/#user303_t6JyL0qBhX_14.py
+#https://py3.codeskulptor.org/#user303_t6JyL0qBhX_14.py
 import simplegui
 
-canvasDim= (560, 800)
+canvasDim = (560, 800)
 
 #-------------------------------------------------------------------
 class Tree:
