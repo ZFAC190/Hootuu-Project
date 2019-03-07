@@ -1,0 +1,172 @@
+import simplegui
+
+canvasDim= (560, 800)
+
+#-------------------------------------------------------------------
+class Background:
+    def __init__(self,url):
+        self.url=url
+        self.background = simplegui.load_image(url)
+        self.width = self.background.get_width()
+        self.height = self.background.get_height()
+        
+    def draw(self,canvas):
+        for i in range(0,14):
+
+            canvas.draw_image(self.background,((self.width/4)*3,self.height/4),(120,120),[canvasDim[0]/2+250-(40*i),canvasDim[1]/2],[50,50])
+
+            for j in range(0,20):
+
+                    canvas.draw_image(self.background,((self.width/4)*3,self.height/4),(120,120),[canvasDim[0]/2+250-(40*i),30+(j*40)],[50,50]) 
+
+#-------------------------------------------------------------------
+class Canopy:
+    def __init__(self,url):
+        self.url=url
+        self.tree = simplegui.load_image(url)
+        self.width = self.tree.get_width()
+        self.height = self.tree.get_height()
+        
+    def draw(self,canvas):
+        for i in range(0,24):
+
+            if i%2==0:
+                canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[30,0+(35*i)],[175,175])
+                canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[530,0+(35*i)],[175,175])
+
+            else:
+                canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[10,0+(35*i)],[175,175])
+                canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[550,0+(35*i)],[175,175])
+        
+#-------------------------------------------------------------------        
+class Health_Bar:
+    def __init__(self,url):
+        self.url=url
+        self.heart = simplegui.load_image(url)
+        self.owl =simplegui.load_image('https://raw.githubusercontent.com/ZFAC190/Hootuu-Project/master/Owl%20Frame%5B1531%5D.png')
+        self.width = self.heart.get_width()
+        self.height = self.heart.get_height()
+        
+        self.health = 6 # Should take these as parameters from the player class or a constant
+        self.lives = 3 
+       
+    
+    def damage(self):
+        if (self.health>0):
+            self.health=self.health-1
+        else:
+            self.health=6
+            self.lives = self.lives-1
+           
+        if (self.lives<=0):
+            self.reset()
+            
+            
+    def heal(self):
+        if (self.health<6):
+            self.health=self.health+1
+        
+    def reset(self):
+        self.health=6
+        self.lives=3
+    
+    def draw(self,canvas):
+        
+        # Health 
+        canvas.draw_polygon([(14, 14), (173,14),(173,44),(14,44)], 5, 'silver','gray') #248 as the width
+        
+        for i in range(0,self.health):
+            canvas.draw_image(self.heart,(self.width/2,self.height/2),(self.width,self.height),[30+(i*25),28],[25,25])
+            
+        # Lives
+        
+        canvas.draw_polygon([(14, 44), (92,44),(92,74),(14,74)], 5, 'silver','gray')
+
+        canvas.draw_text('x', (62, 65), 20, 'gold', 'monospace')
+        canvas.draw_text(str(self.lives), (72,67), 25, 'gold', 'monospace')
+        
+                 # Owl icon
+        
+        canvas.draw_image(self.owl,(self.owl.get_width()/2,self.owl.get_height()/2),(self.owl.get_width(),self.owl.get_height()),(42,59),[30,30])
+        
+        canvas.draw_polygon([(14, 44), (92,44),(92,74),(14,74)], 5,'silver')
+   
+#-------------------------------------------------------------------   
+
+class Scoreboard:
+    def __init__(self):
+        self.score=0
+       
+    
+    def updateScore(self,update):
+        self.score+=update
+        
+    def resetScore(self):
+        self.score=0
+        
+    def draw(self,canvas):
+        
+        canvas.draw_polygon([(canvasDim[0]-14, 14), (350,14),(350,44),(canvasDim[0]-14,44)], 5, 'silver','gray')
+        canvas.draw_text('Score:', (358, 38), 25, 'gold', 'monospace')
+        
+        baseScore='000000000'
+        score=''
+        
+        for i in range(0,len(baseScore)-len(str(self.score))):
+            score=score+'0'
+
+        score = score + str(self.score)
+
+        canvas.draw_text(score, (440, 38), 20, 'gold', 'monospace')
+        
+#------------------------------------------------------------------- 
+class Main_Screen:
+    def __init__(self):
+        self.backgroundUrl='https://streak.club/img/dXBsb2Fkcy9pbWFnZS82MDkxLnBuZw==/original/lvbzh1.png'
+        self.treeUrl='http://orig08.deviantart.net/e55b/f/2012/146/c/0/c0a5a29fd1460939a810ae10c84f9c4f-d515mo1.png'
+        self.heartUrl='http://orig02.deviantart.net/8baa/f/2012/058/0/5/8_bit_heart_stock_by_xquatrox-d4r844m.png'
+        
+        #
+        
+        self.background = Background(self.backgroundUrl)
+        self.treeCanopy = Canopy(self.treeUrl)
+        self.healthBar = Health_Bar(self.heartUrl)
+        self.scoreBoard = Scoreboard()
+    
+    def draw(self,canvas):
+        
+        #Background
+        
+        self.background.draw(canvas)
+
+        #Tree Canopy - Recolour
+        
+        self.treeCanopy.draw(canvas)
+
+        #Borders
+        canvas.draw_polygon([(0, 0), (0, canvasDim[1]), (canvasDim[0], canvasDim[1]), (canvasDim[0],0)], 20, 'silver')
+        canvas.draw_polygon([(5, 5), (5, canvasDim[1]-5), (canvasDim[0]-5, canvasDim[1]-5), (canvasDim[0]-5,5)], 2, 'gold')
+
+        #Health box
+        
+        self.healthBar.draw(canvas)
+        self.healthBar.damage()
+        
+
+        #Score
+        
+        self.scoreBoard.draw(canvas)
+        self.scoreBoard.updateScore(10)
+
+#-------------------------------------------------------------------
+
+def draw(canvas):
+    Main.draw(canvas) # Draws Main Screen
+   
+frame = simplegui.create_frame("Main Screen", canvasDim[0], canvasDim[1])
+frame.set_canvas_background('black')
+
+Main=Main_Screen()
+frame.set_draw_handler(draw)
+
+frame.start()
