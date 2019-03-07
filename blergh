@@ -1,0 +1,10 @@
+def draw(self, canvas):
+        self.update()
+        canvas.draw_image(self.IMG, (self.FRAME_DIMS[0]*self.frameIndex[0] + self.FRAME_CENTRE[0],
+                            self.FRAME_DIMS[1]*self.frameIndex[1] + self.FRAME_CENTRE[1]),
+                      self.FRAME_DIMS, self.position2D, (self.FRAME_DIMS[0]*self.scale, self.FRAME_DIMS[1]*self.scale))
+    
+    def nextFrame(self):
+        self.frameIndex[0] = (self.frameIndex[0] + 1) % self.FRAMES[0]
+        if self.frameIndex[0] == 0:
+            self.frameIndex[1] = (self.frameIndex[1] + 1) % self.FRAMES[1]
