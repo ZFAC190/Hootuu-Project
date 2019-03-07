@@ -1,4 +1,4 @@
-https://py3.codeskulptor.org/#user303_UVfQeuVlF4_4.py
+#https://py3.codeskulptor.org/#user303_UVfQeuVlF4_4.py
 import simplegui
 
 canvasDim= (560, 800)
