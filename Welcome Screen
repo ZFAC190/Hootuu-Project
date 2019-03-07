@@ -1,0 +1,112 @@
+https://py3.codeskulptor.org/#user303_t6JyL0qBhX_14.py
+import simplegui
+
+canvasDim= (560, 800)
+
+#-------------------------------------------------------------------
+class Tree:
+    def __init__(self,url):
+        self.url=url
+        self.tree = simplegui.load_image(url)
+        self.width = self.tree.get_width()
+        self.height = self.tree.get_height()
+        
+    def draw(self,canvas):
+        canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[280,550],[500,500])
+
+#------------------------------------------------------------------- 
+        
+class Border_And_Text:
+    def __init__(self):
+        self.colour1='gold'
+        self.colour2='silver'
+    
+    def draw(self,canvas):
+        
+        canvas.draw_polygon([(0, 0), (0, canvasDim[1]), (canvasDim[0], canvasDim[1]), (canvasDim[0],0)], 20, self.colour2)
+        canvas.draw_polygon([(5, 5), (5, canvasDim[1]-5), (canvasDim[0]-5, canvasDim[1]-5), (canvasDim[0]-5,5)], 2, self.colour1)
+        
+        #Text
+        
+        canvas.draw_line((280,0),(280,800),1,self.colour2)
+        
+        canvas.draw_polygon(([65,55],[468,55],[468,115],[65,115]), 8, self.colour2)
+        
+        canvas.draw_text("Welcome Owlett", (75,100), 50, self.colour1, 'monospace')
+        
+        canvas.draw_text("To the Toohuu project, your goal is", (75,140), 20, self.colour1, 'monospace')
+        canvas.draw_text("to survive as long as possible and", (80,160), 20, self.colour1, 'monospace')
+        canvas.draw_text("achieve the highest score possible.", (75,180), 20, self.colour1, 'monospace')
+        canvas.draw_text("You must use the arrow keys to move", (75,200), 20, self.colour1, 'monospace')
+        canvas.draw_text("and the spacebar to fire.", (133,220), 20, self.colour1, 'monospace')
+        canvas.draw_text("Defeat the rat.", (190,260), 20, self.colour1, 'monospace')
+        canvas.draw_text("Press the enter key to begin:", (110,280), 20, self.colour1, 'monospace') 
+        
+        # Outer Borders
+        
+        #canvas.draw_polygon(([65,55],[468,55],[468,115],[65,115]), 8, "blue","blue")
+        
+        canvas.draw_polygon(([227,292],[338,292],[338,332],[227,332]), 8, self.colour2)
+        canvas.draw_line((65,100),(65,208),8,self.colour2)
+        canvas.draw_line((468,100),(468,208),8,self.colour2)
+        canvas.draw_line((130,230),(410,230),8,self.colour2)
+        canvas.draw_line((472,210),(410,210),8,self.colour2)
+        canvas.draw_line((61,210),(127,210),8,self.colour2)
+        canvas.draw_line((412,206),(412,234),8,self.colour2)
+        canvas.draw_line((127,206),(127,234),8,self.colour2)
+        
+        
+        canvas.draw_polygon(([65,55],[468,55],[468,115],[65,115]), 2, self.colour1)
+        canvas.draw_polygon(([227,292],[338,292],[338,332],[227,332]), 2, self.colour1)
+        canvas.draw_line((65,100),(65,211),2, self.colour1)
+        canvas.draw_line((468,100),(468,208),2, self.colour1)
+        canvas.draw_line((127,230),(413,230),2, self.colour1)
+        canvas.draw_line((469,210),(412,210),2, self.colour1)
+        canvas.draw_line((65,210),(127,210),2, self.colour1)
+       
+        canvas.draw_line((412,209),(412,231),2, self.colour1)
+        canvas.draw_line((127,209),(127,231),2, self.colour1)
+        
+        # Enter
+       
+        canvas.draw_text("Enter", (234,323), 35, self.colour1, 'monospace')
+        
+        # Owl
+        
+        canvas.draw_circle((280,500),10,4,self.colour1)
+        
+#------------------------------------------------------------------- 
+class Welcome_Screen:
+    def __init__(self):
+        self.tree = Tree('http://orig08.deviantart.net/e55b/f/2012/146/c/0/c0a5a29fd1460939a810ae10c84f9c4f-d515mo1.png')
+        self.bordersAndText = Border_And_Text()
+        
+    def draw(self,canvas):
+        
+        #Tree
+        
+        self.tree.draw(canvas)
+        
+        #Borders and text
+        
+        self.bordersAndText.draw(canvas)
+        
+       
+        
+
+
+#-------------------------------------------------------------------
+
+def draw(canvas):
+    
+    Welcome.draw(canvas)
+    
+   
+frame = simplegui.create_frame("Welcome Screen", canvasDim[0], canvasDim[1])
+frame.set_canvas_background('black')
+
+Welcome = Welcome_Screen()
+frame.set_draw_handler(draw)
+
+
+frame.start()
