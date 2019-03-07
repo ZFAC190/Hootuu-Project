@@ -1,0 +1,35 @@
+https://py3.codeskulptor.org/#user303_4KFIHS0K1pHzKe8.py
+
+
+
+from user303_h2WWra8E1ZP812e import Vector
+import simplegui
+
+
+
+
+class playerClass:
+    
+    def __init__(self):
+        self.IMG = simplegui.load_image('https://raw.githubusercontent.com/ZFAC190/Hootuu-Project/master/Owl.png')
+        self.playerXY = Vector()
+        self.vel = Vector()
+        self.scale = 1
+        self.IMG_DIMS = (760, 285)
+        self.FRAMES = (8, 3)
+        self.FRAME_DIMS = (self.IMG_DIMS[0]/ self.FRAMES[0], self.IMG_DIMS[1]/self.FRAMES[1])
+        self.FRAME_CENTRE = (self.FRAME_DIMS[0]/2, self.FRAME_DIMS[1]/2)
+        self.frameIndex = (0, 0)
+        self.patterns = Pattern()
+        self.attackForm = 0
+        
+        
+       
+    def draw(self, canvas):
+        self.update()
+        canvas.draw_image(self.IMG, (self.FRAME_DIMS[0]*self.frameIndex[0] + self.FRAME_CENTRE[0],
+                            self.FRAME_DIMS[1]*self.frameIndex[1] + self.FRAME_CENTRE[1]),
+                      self.FRAME_DIMS, self.position2D, (self.FRAME_DIMS[0]*self.scale, self.FRAME_DIMS[1]*self.scale))
+    
+    def nextFrame(self):
+        self.frameIndex[0] = (self.frameIndex[0] + 1) % self.FRAMES[0]
