@@ -1,0 +1,31 @@
+
+#https://py3.codeskulptor.org/#user303_l3EwAWKxVt_15.py
+    
+#This shows a psuedo version of the game class 
+
+#For Silas
+
+import simplegui
+
+from user303_n3o9iMnPuq_1 import * 
+from user303_t6JyL0qBhX_150 import * 
+
+
+def draw(canvas):
+    
+    if screen ==1:
+        Main.draw(canvas)
+     
+    if screen ==2:
+        Welcome.draw(canvas)
+
+screen = 1 # Swap Between 1 and 2 
+
+frame = simplegui.create_frame("Game", 560, 800)
+
+Main=Main_Screen()
+Welcome = Welcome_Screen()
+
+frame.set_draw_handler(draw)
+
+frame.start()
