@@ -1,4 +1,4 @@
-#https://py3.codeskulptor.org/#user303_t6JyL0qBhX_146.py
+#https://py3.codeskulptor.org/#user303_t6JyL0qBhX_151.py
 import simplegui
 
 canvasDim= (560, 800)
@@ -130,7 +130,7 @@ class Welcome_Screen:
         
     def draw(self,canvas):
         
-        inter.update(self.enterButton)
+        #inter.update(self.enterButton)
   
         #Tree
         
@@ -146,20 +146,12 @@ class Welcome_Screen:
 
 #-------------------------------------------------------------------
 
-def draw(canvas):
-    
-    Welcome.draw(canvas)
-    
-   
-frame = simplegui.create_frame("Welcome Screen", canvasDim[0], canvasDim[1])
-frame.set_canvas_background('black')
+#Need a Keyboard Handler for  intercation
 
-Welcome = Welcome_Screen()
-kbd = Keyboard()
-inter = Interaction(kbd)
+#kbd = Keyboard()
+#inter = Interaction(kbd)
 
-frame.set_draw_handler(draw)
-frame.set_keydown_handler(kbd.keyDown)
-frame.set_keyup_handler(kbd.keyUp)
+#frame.set_draw_handler(draw)
+#frame.set_keydown_handler(kbd.keyDown)
+#frame.set_keyup_handler(kbd.keyUp)
 
-frame.start()
