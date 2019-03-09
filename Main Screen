@@ -1,7 +1,24 @@
-#https://py3.codeskulptor.org/#user303_UVfQeuVlF4_18.py
 import simplegui
 
+#https://py3.codeskulptor.org/#user303_UVfQeuVlF4_33.py
+    
 canvasDim= (560, 800)
+
+#-------------------------------------------------------------------
+
+class Clock:
+    def __init__(self,tickpoint):
+        self.time = 0
+        self.tickpoint = tickpoint
+    
+    def tick(self):
+        self.time+=1
+    
+    def timer(self):
+        if self.time%self.tickpoint==0:
+            return True
+        else:
+            return False
 
 #-------------------------------------------------------------------
 class Background:
@@ -19,7 +36,9 @@ class Health_Bar:
     def __init__(self,url):
         self.url=url
         self.heart = simplegui.load_image(url)
-        self.owl =simplegui.load_image('https://raw.githubusercontent.com/ZFAC190/Hootuu-Project/master/Owl%20Frame%5B1531%5D.png')
+        
+        self.owl = simplegui.load_image('https://raw.githubusercontent.com/ZFAC190/Hootuu-Project/master/Owl.png')
+        
         self.width = self.heart.get_width()
         self.height = self.heart.get_height()
         
@@ -63,7 +82,9 @@ class Health_Bar:
         
                  # Owl icon
         
-        canvas.draw_image(self.owl,(self.owl.get_width()/2,self.owl.get_height()/2),(self.owl.get_width(),self.owl.get_height()),(42,59),[30,30])
+        
+        
+        canvas.draw_image(self.owl,(48+(6*95),48+(1*95)),(95,95),(40,55),(48,48))
         
         canvas.draw_polygon([(14, 44), (92,44),(92,74),(14,74)], 5,'silver')
    
@@ -111,12 +132,15 @@ class Main_Screen:
         
         self.healthBar = Health_Bar(self.heartUrl)
         self.scoreBoard = Scoreboard()
+        
+        self.clock = Clock(60) # 60fps
     
     def draw(self,canvas):
         
         #Background
         
         self.background.draw(canvas)
+        self.clock.tick()
 
         
 
@@ -127,13 +151,17 @@ class Main_Screen:
         #Health box
         
         self.healthBar.draw(canvas)
-        self.healthBar.damage()
+        
+        if self.clock.timer():
+            self.healthBar.damage()
         
 
         #Score
         
         self.scoreBoard.draw(canvas)
-        self.scoreBoard.updateScore(10)
+        
+        if self.clock.timer():
+            self.scoreBoard.updateScore(10)
 
 #-------------------------------------------------------------------
 
