@@ -1,7 +1,7 @@
-#https://py3.codeskulptor.org/#user303_t6JyL0qBhX_13.py
+#https://py3.codeskulptor.org/#user303_t6JyL0qBhX_146.py
 import simplegui
 
-canvasDim = (560, 800)
+canvasDim= (560, 800)
 
 #-------------------------------------------------------------------
 class Tree:
@@ -10,10 +10,17 @@ class Tree:
         self.tree = simplegui.load_image(url)
         self.width = self.tree.get_width()
         self.height = self.tree.get_height()
+       
         
-    def draw(self,canvas):
-        canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[280,550],[500,500])
+        self.owl= simplegui.load_image('https://raw.githubusercontent.com/ZFAC190/Hootuu-Project/master/Owl.png')
+        self.width3 = self.owl.get_width()
+        self.height3 = self.owl.get_height()
 
+    def draw(self,canvas):
+        canvas.draw_image(self.tree,(self.width/2,self.height/2),(self.width,self.height),[280,580],[450,450])
+        
+        canvas.draw_image(self.owl,(48+(4*95),48+(1*95)),(95,95),(280,370),(150,150))
+        
 #------------------------------------------------------------------- 
         
 class Border_And_Text:
@@ -28,25 +35,26 @@ class Border_And_Text:
         
         #Text
         
-        canvas.draw_line((280,0),(280,800),1,self.colour2)
+        
         
         canvas.draw_polygon(([65,55],[468,55],[468,115],[65,115]), 8, self.colour2)
         
-        canvas.draw_text("Welcome Owlett", (75,100), 50, self.colour1, 'monospace')
+        canvas.draw_text("Welcome Owlet", (80,100), 50, self.colour1, 'monospace')
         
         canvas.draw_text("To the Toohuu project, your goal is", (75,140), 20, self.colour1, 'monospace')
         canvas.draw_text("to survive as long as possible and", (80,160), 20, self.colour1, 'monospace')
         canvas.draw_text("achieve the highest score possible.", (75,180), 20, self.colour1, 'monospace')
         canvas.draw_text("You must use the arrow keys to move", (75,200), 20, self.colour1, 'monospace')
         canvas.draw_text("and the spacebar to fire.", (133,220), 20, self.colour1, 'monospace')
-        canvas.draw_text("Defeat the rat.", (190,260), 20, self.colour1, 'monospace')
-        canvas.draw_text("Press the enter key to begin:", (110,280), 20, self.colour1, 'monospace') 
+        canvas.draw_text("Defeat the rat.", (194,260), 20, self.colour1, 'monospace')
+        canvas.draw_text("Press the O to begin:", (165,280), 20, self.colour1, 'monospace') 
         
         # Outer Borders
         
-        #canvas.draw_polygon(([65,55],[468,55],[468,115],[65,115]), 8, "blue","blue")
         
-        canvas.draw_polygon(([227,292],[338,292],[338,332],[227,332]), 8, self.colour2)
+        
+        canvas.draw_polygon(([260,292],[299,292],[299,332],[260,332]), 8, self.colour2)
+        
         canvas.draw_line((65,100),(65,208),8,self.colour2)
         canvas.draw_line((468,100),(468,208),8,self.colour2)
         canvas.draw_line((130,230),(410,230),8,self.colour2)
@@ -57,7 +65,9 @@ class Border_And_Text:
         
         
         canvas.draw_polygon(([65,55],[468,55],[468,115],[65,115]), 2, self.colour1)
-        canvas.draw_polygon(([227,292],[338,292],[338,332],[227,332]), 2, self.colour1)
+        
+        canvas.draw_polygon(([260,292],[299,292],[299,332],[260,332]), 2, self.colour1)
+        
         canvas.draw_line((65,100),(65,211),2, self.colour1)
         canvas.draw_line((468,100),(468,208),2, self.colour1)
         canvas.draw_line((127,230),(413,230),2, self.colour1)
@@ -69,20 +79,59 @@ class Border_And_Text:
         
         # Enter
        
-        canvas.draw_text("Enter", (234,323), 35, self.colour1, 'monospace')
+        canvas.draw_text("O", (270,323), 35, self.colour1, 'monospace')
         
-        # Owl
+       
+
+#------------------------------------------------------------------- 
+
+class Enter_Button:
+    def __init__(self):
+        self.pressed = False
+     
+    def update(self,canvas):
+        if self.pressed:
+            canvas.draw_text("O", (270,323), 35, "rgb(65,105,225)", 'monospace')
+            #Flap The Owl's wings
+    
+    def change(self):
+        if self.pressed==False:
+            self.pressed=True
         
-        canvas.draw_circle((280,500),10,4,self.colour1)
+#------------------------------------------------------------------- 
+        
+class Keyboard:
+    def __init__(self):
+        self.o = False
+        
+    def keyDown(self, key):
+        if key == simplegui.KEY_MAP['o']: # K_RETURN
+            self.o = True
+            
+    def keyUp(self, key):
+        if key == simplegui.KEY_MAP['o']:
+            self.o = False
+            
+#-------------------------------------------------------------------           
+class Interaction:
+    def __init__(self, keyboard):
+        self.keyboard = keyboard
+
+    def update(self, enter_button):
+        if self.keyboard.o:
+            enter_button.change()
         
 #------------------------------------------------------------------- 
 class Welcome_Screen:
     def __init__(self):
         self.tree = Tree('http://orig08.deviantart.net/e55b/f/2012/146/c/0/c0a5a29fd1460939a810ae10c84f9c4f-d515mo1.png')
         self.bordersAndText = Border_And_Text()
+        self.enterButton = Enter_Button()
         
     def draw(self,canvas):
         
+        inter.update(self.enterButton)
+  
         #Tree
         
         self.tree.draw(canvas)
@@ -91,7 +140,7 @@ class Welcome_Screen:
         
         self.bordersAndText.draw(canvas)
         
-       
+        self.enterButton.update(canvas)
         
 
 
@@ -106,7 +155,11 @@ frame = simplegui.create_frame("Welcome Screen", canvasDim[0], canvasDim[1])
 frame.set_canvas_background('black')
 
 Welcome = Welcome_Screen()
-frame.set_draw_handler(draw)
+kbd = Keyboard()
+inter = Interaction(kbd)
 
+frame.set_draw_handler(draw)
+frame.set_keydown_handler(kbd.keyDown)
+frame.set_keyup_handler(kbd.keyUp)
 
 frame.start()
