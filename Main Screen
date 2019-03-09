@@ -1,6 +1,6 @@
 import simplegui
 
-#https://py3.codeskulptor.org/#user303_UVfQeuVlF4_33.py
+#https://py3.codeskulptor.org/#user303_n3o9iMnPuq_1.py
     
 canvasDim= (560, 800)
 
@@ -164,14 +164,3 @@ class Main_Screen:
             self.scoreBoard.updateScore(10)
 
 #-------------------------------------------------------------------
-
-def draw(canvas):
-    Main.draw(canvas) # Draws Main Screen
-   
-frame = simplegui.create_frame("Main Screen", canvasDim[0], canvasDim[1])
-frame.set_canvas_background('black')
-
-Main=Main_Screen()
-frame.set_draw_handler(draw)
-
-frame.start()
