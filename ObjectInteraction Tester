@@ -1,0 +1,29 @@
+https://py3.codeskulptor.org/#user303_YDfQIzNmMqK1ppL_2.py
+
+from user303_7lDehNYviAM54hJ_23 import ObjectInteraction
+from user303_doHrN6Dhd15OnO7_7 import Object, Bullet
+from user303_h2WWra8E1ZP812e import Vector
+import simplegui
+
+def draw(canvas):
+    i1.draw(canvas)
+    print(o11.position2D.getP())
+    #i1.addBullet(Bullet(t1, FRAME, Vector(200, 400), Vector(1, 1)))
+    
+CANVAS_WIDTH = 540
+CANVAS_HEIGHT = 800
+FRAME = (CANVAS_WIDTH, CANVAS_HEIGHT)
+        
+t1 = Object(FRAME, Vector(500, 700))
+o11 = Bullet(t1, FRAME, Vector(200, 400), Vector(1, 1))
+
+i1 = ObjectInteraction(t1)
+
+i1.addBullet(o11)
+
+# Create a frame and assign callbacks to event handlers
+frame = simplegui.create_frame("Interaction", 600, 850)
+frame.set_draw_handler(draw)
+
+# Start the frame animation
+frame.start()
