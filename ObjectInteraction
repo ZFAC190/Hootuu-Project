@@ -1,0 +1,53 @@
+https://py3.codeskulptor.org/#user303_7lDehNYviAM54hJ_23.py
+
+# Class List: ObjectInteraction
+# Author: Max Tompkins
+# Date: 02/03/19
+
+# ---Libraries---
+
+from user303_h2WWra8E1ZP812e import Vector
+
+# ---Libraries---
+
+# ---Class List---
+
+class ObjectInteraction:
+    # initialisation
+    def __init__(self, target):
+        self.target = target
+        self.bullets = []
+        self.inCollision = {}
+        
+    # add an object to the objs2 array
+    def addBullet(self, bullet):
+        self.bullets.append(bullet)
+        self.inCollision[(bullet, self.target)] = self.hit(self.target, bullet)
+        
+    # updates the interaction between all bullets and the target
+    def update(self, canvas):
+        for bullet in self.bullets:
+            if self.hit(self.target, bullet):
+                if not self.inCollision[(bullet, self.target)]:
+                    self.inCollision[(bullet, self.target)] = True
+                    self.bullets.remove(bullet)
+                    bullet.hit = True
+            else:
+                self.inCollision[(bullet, self.target)] = False
+    
+    # draw the bullets and target after updating their collisions
+    def draw(self, canvas):
+        self.update(canvas)
+        for bullet in self.bullets:
+            # bullet.updateMovement(bullet.owner.pattern)
+            bullet.updateMovement()
+            if bullet.alive:
+                bullet.draw(canvas)
+        self.target.draw(canvas)
+        #print(len(self.bullets))
+        
+    def hit(self, t, obj):
+        # assume target and object are circular sprites
+        return (t.position2D.copy().subVector(obj.position2D).length() <= (t.r + obj.r))
+
+# ---Class List---
