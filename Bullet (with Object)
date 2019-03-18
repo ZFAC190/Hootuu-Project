@@ -1,0 +1,67 @@
+https://py3.codeskulptor.org/#user303_doHrN6Dhd15OnO7_7.py
+
+# Class List: Object, Bullet
+# Author: Max Tompkins
+# Date: 07/03/19
+
+# ---Libraries---
+
+from user303_h2WWra8E1ZP812e import Vector
+
+# ---Libraries---
+
+# ---Class List---
+
+class Object(object):
+    # initialisation
+    def __init__(self, domain, p2D = Vector(), vel = Vector(), r = 5, col = "White", border = 1):
+        self.domain = domain
+        self.position2D = p2D
+        self.vel = vel
+        self.r = r
+        self.col = col
+        self.border = border
+        self.hit = False
+        self.alive = True
+        
+    # Returns numerical distance between object centre and given position pos
+    def distanceTo(self, pos):
+        return (self.position2D - pos).length()
+
+    # Returns True is velocity is 0, False otherwise
+    def isStationary(self):
+        return self.vel.length() == 0
+    
+    # Returns True if pos is within the range
+    def contains(self, pos, range):
+        return (pos.x <= range[0] and pos.x >= 0 and pos.y <= range[1] and pos.y >= 0)
+    
+    # Updates the object in regards to movement
+    def updateMovement(self):
+        # self.vel = pattern.velocityFunction()
+        if self.hit or not self.contains(self.position2D, self.domain):
+            self.kill()
+        else:
+            self.position2D.addVector(self.vel)
+
+    # Sets the velocity of the object to a new Vector: (0, 0)
+    def stop(self):
+        self.vel = Vector()
+        
+    # Draws the object on a given canvas
+    def draw(self, canvas):
+        canvas.draw_circle(self.position2D.getP(), self.r, self.border, "White", self.col)
+        
+    # kills the sprite
+    def kill(self):
+        self.stop()
+        self.position2D = Vector()
+        self.alive = False
+
+class Bullet(Object):
+    # initialisation
+    def __init__(self, owner, domain, p2D = Vector(), vel = Vector(), r = 5, col = "White", border = 1):
+        self.owner = owner
+        Object.__init__(self, domain, p2D, vel, r, col, border)
+
+# ---Class List---
