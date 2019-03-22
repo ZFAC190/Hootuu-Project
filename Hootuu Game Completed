@@ -1,0 +1,158 @@
+https://py3.codeskulptor.org/#user303_PVa6wUGRkI_7.py
+//HURRAH!!//
+
+import simplegui
+from user303_giu6U3TuLV_1 import * # Welcome - Done to convention 
+from user303_wi4QtL86wt_1 import * #  Main
+from user303_GdJdHwS4Fv_0 import * # Game Over
+from user303_Ld9vkYwTgr_9 import * # Keyboard + Interaction
+from user303_Em1VaqhB3Y_16 import * # Variables - Done to convention 
+from user303_66pyb8Yton_8 import * #Clock - Done to convention 
+from user303_CoAdF5lNo9_52 import * # EnemySprite - Done to convention 
+from user303_voAtsoJFiM_26 import * # PlayerSprite - Done to convention 
+from user303_t5Ji4yRVIc_0 import * # Player - Done to convention 
+from user303_7lDehNYviAM54hJ_61 import * # ObjectInteraction
+from user303_oJN1BBNu8VcOmm7_16 import * # Pattern Line for Owl
+from user303_JDwueaOKqy_20 import * # Pattern Cone for Owl
+from user303_jYzyJsmc3QpYRvv_21 import * # Pattern Pulse for Rat
+
+class Game:
+    def __init__(self):
+        self.Variables = Variables()
+        
+        self.Welcome = Welcome_Screen()
+        self.Main = Main_Screen(self.Variables)
+        self.GameOver = Game_Over_Screen()
+        self.ActiveScreen = 1 
+            
+        self.Keyboard = Keyboard()
+        self.KeyboardInteraction = Interaction(self.Keyboard,self.Variables)
+        
+        self.Clock1 = Clock(60)
+        self.Clock2 = Clock(10)
+        self.Clock3 = Clock(180)
+        self.EnemyClock = Clock(40)
+        self.Score = 0
+        self.Time = 0
+        
+        self.Player = Player(self.Variables)
+        self.EnemySprite = Enemy_Sprite(self.Variables)
+        self.PlayerSprite = Player_Sprite(self.Variables, self.Player)
+        
+        self.owlInteraction = ObjectInteraction(self.EnemySprite, self.Main, self.PlayerSprite)
+        self.ratInteraction = ObjectInteraction(self.PlayerSprite, self.Main, self.PlayerSprite)
+        
+        self.lineShot = PatternLine(self.PlayerSprite, self.owlInteraction, self.Variables)
+        self.coneShot = PatternCone(self.PlayerSprite, self.owlInteraction, self.Variables)
+        self.pulseShot = PatternPulse(self.EnemySprite, self.ratInteraction, self.Variables)
+        
+    def draw(self, canvas):
+        self.KeyboardInteraction.update()
+        
+        if self.ActiveScreen == 1:
+            self.Welcome.draw(canvas)
+            
+            if self.Keyboard.o:
+                self.ActiveScreen = 2
+                self.Keyboard.o = False
+                
+        if self.ActiveScreen == 2:
+            self.Main.draw(canvas)
+            
+            self.Clock1.tick()
+            self.Clock2.tick()
+            self.Clock3.tick()
+            self.EnemyClock.tick()
+            
+            self.owlInteraction.draw(canvas)
+            self.owlInteraction.update()
+            self.ratInteraction.draw(canvas)
+            self.ratInteraction.update()
+            self.Main.HealthBar.update()
+            self.PlayerSprite.updatePosition()
+            
+            if self.Clock1.check():
+                self.Main.ScoreBoard.updateScore(2)
+            
+            self.Player.update(canvas)
+            self.PlayerSprite.draw(canvas)
+            self.EnemySprite.draw(canvas)
+            
+            if self.Clock2.check() and self.Player.shooting:
+                self.KeyboardInteraction.update()
+                if self.Variables.KeySpace:
+                    if (not self.lineShot.processing) and self.Player.shootingLine:
+                        self.lineShot.processing = True
+                        self.Player.shootingLine = False
+                        self.Keyboard.space = False
+                        self.Keyboard.p = False
+                        self.lineShot.supply(self.Variables.playerXY.copy())
+                    if (not self.coneShot.processing) and self.Player.shootingCone:
+                        self.coneShot.processing = True
+                        self.Player.shootingCone = False
+                        self.Keyboard.space = False
+                        self.Keyboard.p = False
+                        self.coneShot.supply(self.Variables.playerXY.copy())
+                if self.Variables.KeyP:
+                    if (not self.coneShot.processing) and self.Player.shootingCone:
+                        self.coneShot.processing = True
+                        self.Player.shootingCone = False
+                        self.Keyboard.space = False
+                        self.Keyboard.p = False
+                        self.coneShot.supply(self.Variables.playerXY.copy())
+                    if (not self.lineShot.processing) and self.Player.shootingLine:
+                        self.lineShot.processing = True
+                        self.Player.shootingLine = False
+                        self.Keyboard.space = False
+                        self.Keyboard.p = False
+                        self.lineShot.supply(self.Variables.playerXY.copy())
+                        
+            if self.Clock2.check():
+                self.lineShot.processing = False
+                self.Player.shooting = False
+                self.Keyboard.space = False
+                
+            if self.Clock2.check():
+                self.EnemySprite.update()
+                self.PlayerSprite.update()
+                
+            if self.Clock3.check() and self.coneShot.processing:
+                self.coneShot.processing = False
+                self.Player.shooting = False
+                self.Keyboard.p = False
+                
+            if self.EnemyClock.check():
+                self.pulseShot.processing = False
+                self.pulseShot.supply(self.EnemySprite.position2D.copy())
+                
+            if self.Player.dead():
+                self.Score = self.Main.ScoreBoard.score
+                self.Clock1.count()
+                self.Time += int(self.Clock1.time)
+                
+                self.ActiveScreen = 3
+                self.Keyboard.o = False
+            
+        if self.ActiveScreen == 3:
+            self.owlInteraction.bullets = []
+            self.ratInteraction.bullets = []
+            self.GameOver.draw(canvas, self.Score, self.Time)
+            self.Clock1.reset()
+            self.Main.reset()
+            self.Player.reset()
+            
+            if self.Keyboard.o:
+                self.ActiveScreen = 1
+                self.Keyboard.o = False
+            if self.Keyboard.r:
+                self.ActiveScreen = 2
+                self.Keyboard.r = False
+                
+Game = Game()
+
+frame = simplegui.create_frame("Hootuu Project", Game.Variables.CANVAS_DIM[0], Game.Variables.CANVAS_DIM[1])
+frame.set_draw_handler(Game.draw)
+frame.set_keydown_handler(Game.Keyboard.keyDown)
+frame.set_keyup_handler(Game.Keyboard.keyUp)
+
+frame.start()
